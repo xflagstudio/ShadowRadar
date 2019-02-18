@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ShadowRadar_Example' do
+  pod 'ShadowRadar', :path => '../'
+
+  target 'ShadowRadar_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
