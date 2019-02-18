@@ -1,0 +1,16 @@
+PODS:
+  - ShadowRadar (0.1.0)
+
+DEPENDENCIES:
+  - ShadowRadar (from `../`)
+
+EXTERNAL SOURCES:
+  ShadowRadar:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ShadowRadar: eabf74c6b9687ca95e239fb4196372a90f2b0efe
+
+PODFILE CHECKSUM: a76d69bc7d47f3d3e2500c340dff103ef621929e
+
+COCOAPODS: 1.6.0

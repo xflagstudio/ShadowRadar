@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import ShadowRadar
 
 class ViewController: UIViewController {
+    
+    private lazy var radar = ShadowRadar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        view.addSubview(radar)
     }
 
     override func didReceiveMemoryWarning() {
