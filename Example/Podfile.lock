@@ -1,8 +1,14 @@
 PODS:
   - ShadowRadar (0.1.0)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - ShadowRadar (from `../`)
+  - SnapKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SnapKit
 
 EXTERNAL SOURCES:
   ShadowRadar:
@@ -10,7 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ShadowRadar: eabf74c6b9687ca95e239fb4196372a90f2b0efe
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: a76d69bc7d47f3d3e2500c340dff103ef621929e
+PODFILE CHECKSUM: 7aaa07075dd1ab693a9578a09d99f883774a8e67
 
 COCOAPODS: 1.6.0

@@ -7,24 +7,31 @@
 //
 
 import UIKit
+import SnapKit
 import ShadowRadar
 
 class ViewController: UIViewController {
     
-    private lazy var radar = ShadowRadar(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+    private lazy var radar = ShadowRadar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        view.backgroundColor = .black
+
         view.addSubview(radar)
+        createConstraints()
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        radar.addInnerShadow(shadowColor: .red, shadowSize: 5, shadowOpacity: 1)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func createConstraints() {
+        radar.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalTo(radar.snp.width)
+        }
     }
-
+    
 }
 
