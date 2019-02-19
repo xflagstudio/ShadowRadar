@@ -11,12 +11,13 @@ import ShadowRadar
 
 class ViewController: UIViewController {
     
-    private lazy var radar = ShadowRadar()
+    private lazy var radar = ShadowRadar(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        view.backgroundColor = .black
         view.addSubview(radar)
     }
 
