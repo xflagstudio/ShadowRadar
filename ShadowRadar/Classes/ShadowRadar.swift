@@ -2,7 +2,7 @@
 //  ShadowRadar.swift
 //  ShadowRadar
 //
-//  Created by Meng Li  on 2019/02/18.
+//  Created by Meng Li on 2019/02/18.
 //  Copyright © 2018 XFLAG. All rights reserved.
 //
 
@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 import UIKit
+import ShapeView
 
 fileprivate struct Const {
     
@@ -54,29 +55,52 @@ extension UIBezierPath {
 }
 
 public class ShadowRadar: UIView {
-
-    private var screenPath: UIBezierPath?
     
+    private lazy var backgroundLayer: ShapeLayer = {
+        let layer = ShapeLayer()
+        layer.layerPath = .custom {
+            let radius = self.bounds.width / 2
+            let center = CGPoint(x: radius, y: radius)
+            $0.addPoints(Const.points(center: center, radius: radius))
+        }
+        layer.backgroundColor = UIColor(white: 0.5, alpha: 0.3).cgColor
+        layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
+        layer.outerShadow = ShapeShadow(raduis: 20, color: .lightGray)
+        return layer
+    }()
+    
+    private lazy var levelLayer = CALayer()
+    
+    public var levels: Int? {
+        didSet {
+            guard let levels = levels, levels > 1 else {
+                return
+            }
+
+            (1 ..< levels).map { levels - $0 }.forEach { level in
+                let layer = ShapeLayer()
+                layer.layerPath = .custom {
+                    let radius = self.bounds.width / 2
+                    let center = CGPoint(x: radius, y: radius)
+                    let currentRadius = radius * CGFloat(level) / CGFloat(levels)
+                    print(currentRadius)
+                    $0.addPoints(Const.points(center: center, radius: currentRadius))
+                }
+                layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
+                levelLayer.addSublayer(layer)
+            }
+        }
+    }
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        layer.addSublayer(backgroundLayer)
+        layer.addSublayer(levelLayer)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func updateScreenPath() {
-        screenPath = {
-            let path = UIBezierPath()
-            let main = UIScreen.main.bounds
-            path.move(to: CGPoint(x: -frame.origin.x, y: -frame.origin.y))
-            path.addLine(to: CGPoint(x: main.width - frame.origin.x, y: -frame.origin.y))
-            path.addLine(to: CGPoint(x: main.width - frame.origin.x, y: main.height - frame.origin.y))
-            path.addLine(to: CGPoint(x: -frame.origin.x, y: main.height - frame.origin.y))
-            path.close()
-            return path
-        }()
     }
     
     private func starPath(in center: CGPoint, with radius: CGFloat) -> UIBezierPath {
@@ -88,33 +112,9 @@ public class ShadowRadar: UIView {
     
     public override var bounds: CGRect {
         didSet {
-            let radius = bounds.width / 2
-            let center = CGPoint(x: radius, y: radius)
-            let path = starPath(in: center, with: radius)
-            
-            let shapLayer = CAShapeLayer()
-            shapLayer.path = path.cgPath
-            shapLayer.fillColor = UIColor.lightGray.cgColor
-            
-            layer.addSublayer(shapLayer)
-            
-            
-            let shadowLayer = CAShapeLayer()
-            shadowLayer.frame = bounds
-            shadowLayer.shadowColor = UIColor.blue.cgColor
-            shadowLayer.shadowOffset = .zero
-            shadowLayer.shadowOpacity = 1
-            shadowLayer.shadowRadius = 5
-            shadowLayer.fillRule = .evenOdd
-            
-            // Define shadow path
-            let shadowPath = UIBezierPath()
-            shadowPath.append(path)
-            shadowPath.append(starPath(in: center, with: radius * 0.9))
-
-            shadowLayer.path = shadowPath.cgPath
-            
-            layer.addSublayer(shadowLayer)
+            backgroundLayer.frame = bounds
+            levelLayer.frame = bounds
+            levelLayer.sublayers?.forEach { $0.frame = bounds }
         }
     }
     

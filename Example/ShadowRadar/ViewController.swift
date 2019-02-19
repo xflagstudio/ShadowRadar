@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  ShadowRadar
 //
-//  Created by lm2343635 on 02/18/2019.
-//  Copyright (c) 2019 lm2343635. All rights reserved.
+//  Created by Meng Li on 2019/02/19.
+//  Copyright © 2018 XFLAG. All rights reserved.
 //
 
 import UIKit
@@ -12,17 +12,36 @@ import ShadowRadar
 
 class ViewController: UIViewController {
     
-    private lazy var radar = ShadowRadar()
+    private lazy var backgroundImageView: UIImageView = {
+        let imageView = UIImageView(frame: view.bounds)
+        imageView.image = UIImage(named: "background.jpg")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    private lazy var blurView: UIVisualEffectView = {
+        let effectView = UIVisualEffectView(frame: view.bounds)
+        effectView.effect = UIBlurEffect(style: .dark)
+        effectView.alpha = 0.8
+        return effectView
+    }()
+    
+    private lazy var radar: ShadowRadar = {
+        let radar = ShadowRadar()
+        radar.levels = 4
+        return radar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(backgroundImageView)
+        view.addSubview(blurView)
         view.addSubview(radar)
         createConstraints()
         
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        radar.addInnerShadow(shadowColor: .red, shadowSize: 5, shadowOpacity: 1)
     }
 
     private func createConstraints() {

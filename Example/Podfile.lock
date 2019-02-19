@@ -1,5 +1,7 @@
 PODS:
-  - ShadowRadar (0.1.0)
+  - ShadowRadar (0.1):
+    - ShapeView (~> 0.3)
+  - ShapeView (0.3)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
@@ -8,6 +10,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - ShapeView
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -15,7 +18,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ShadowRadar: eabf74c6b9687ca95e239fb4196372a90f2b0efe
+  ShadowRadar: c3a4b7e66cc57be1a6681f4bb0fde834548c0c8e
+  ShapeView: df975a526acf1b59d50a2fef4020f0214671a1d9
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
 PODFILE CHECKSUM: 7aaa07075dd1ab693a9578a09d99f883774a8e67
