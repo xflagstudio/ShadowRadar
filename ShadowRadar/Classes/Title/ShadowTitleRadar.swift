@@ -79,6 +79,8 @@ public class ShadowTitleRadar: UIView {
         }
     }
     
+    public var titleMargin: CGFloat = 5
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -93,8 +95,8 @@ public class ShadowTitleRadar: UIView {
         
         shadowRadar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabels[0].snp.bottom)
-            $0.bottom.equalTo(titleLabels[3].snp.top)
+            $0.top.equalTo(titleLabels[0].snp.bottom).offset(titleMargin)
+            $0.bottom.equalTo(titleLabels[3].snp.top).offset(-titleMargin)
             $0.width.equalTo(shadowRadar.snp.height)
         }
         
@@ -108,30 +110,32 @@ public class ShadowTitleRadar: UIView {
             $0.bottom.equalToSuperview()
         }
 
-        let offset = (bounds.height - 2.0 * titleLabels[0].font.lineHeight) / 4.0
+        let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
+        let verticalOffset = radarHeight / 4.0
+        let horizontalOffset = radarHeight * (1 - sin(.pi / 3.0)) / 2.0
         
         titleLabels[1].snp.makeConstraints {
             $0.right.equalToSuperview()
-            $0.left.equalTo(shadowRadar.snp.right)
-            $0.centerY.equalTo(shadowRadar).offset(-offset)
+            $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
         }
         
         titleLabels[2].snp.makeConstraints {
             $0.right.equalToSuperview()
-            $0.left.equalTo(shadowRadar.snp.right)
-            $0.centerY.equalTo(shadowRadar).offset(offset)
+            $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
         }
         
         titleLabels[4].snp.makeConstraints {
             $0.left.equalToSuperview()
-            $0.right.equalTo(shadowRadar.snp.left)
-            $0.centerY.equalTo(shadowRadar).offset(offset)
+            $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
         }
         
         titleLabels[5].snp.makeConstraints {
             $0.left.equalToSuperview()
-            $0.right.equalTo(shadowRadar.snp.left)
-            $0.centerY.equalTo(shadowRadar).offset(-offset)
+            $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
         }
         
     }
