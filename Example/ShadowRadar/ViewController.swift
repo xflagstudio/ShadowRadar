@@ -28,7 +28,9 @@ class ViewController: UIViewController {
     
     private lazy var radar: ShadowRadar = {
         let radar = ShadowRadar()
-        radar.levels = 4
+        radar.maxLevel = 4
+        radar.addRadar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75))
+        radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
         return radar
     }()
 

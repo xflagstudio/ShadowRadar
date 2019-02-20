@@ -30,11 +30,29 @@ import ShapeView
 fileprivate struct Const {
     
     static let vertex = Array(0 ... 5)
-    static let angles: [CGFloat] = Const.vertex.map { .pi * (30.0 + 60.0 * CGFloat($0)) / 180.0 }
+    static let angles: [CGFloat] = [90, 30, 330, 270, 210, 150].map { .pi * CGFloat($0) / 180.0 }
 
     static func points(center: CGPoint, radius: CGFloat) -> [CGPoint] {
         return Const.vertex.map {
-            CGPoint(x: center.x + cos(Const.angles[$0]) * radius, y: center.y - sin(Const.angles[$0]) * radius)
+            CGPoint(
+                x: center.x + cos(Const.angles[$0]) * radius,
+                y: center.y - sin(Const.angles[$0]) * radius
+            )
+        }
+    }
+    
+    static func points(center: CGPoint, radius: CGFloat, levels: [Int], maxLevel: Int) -> [CGPoint] {
+        return Const.vertex.map {
+            (0 ..< levels.count ~= $0) ? levels[$0] : maxLevel
+        }.map {
+            CGFloat((1 ..< maxLevel ~= $0) ? $0 : maxLevel)
+        }.enumerated().map { index, level in
+            let angle = Const.angles[index]
+            let radio = level / CGFloat(maxLevel)
+            return CGPoint(
+                x: center.x + cos(angle) * radius * radio,
+                y: center.y - sin(angle) * radius * radio
+            )
         }
     }
     
@@ -69,25 +87,25 @@ public class ShadowRadar: UIView {
         return layer
     }()
     
+    private lazy var radarLayer = CALayer()
     private lazy var levelLayer = CALayer()
     
-    public var levels: Int? {
+    public var maxLevel: Int? {
         didSet {
-            guard let levels = levels, levels > 1 else {
+            guard let maxLevel = maxLevel, maxLevel > 1 else {
                 return
             }
 
-            (1 ..< levels).map { levels - $0 }.forEach { level in
+            (1 ..< maxLevel).map { maxLevel - $0 }.forEach { level in
                 let layer = ShapeLayer()
                 layer.layerPath = .custom {
                     let radius = self.bounds.width / 2
                     let center = CGPoint(x: radius, y: radius)
-                    let currentRadius = radius * CGFloat(level) / CGFloat(levels)
-                    print(currentRadius)
+                    let currentRadius = radius * CGFloat(level) / CGFloat(maxLevel)
                     $0.addPoints(Const.points(center: center, radius: currentRadius))
                 }
                 layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
-                levelLayer.addSublayer(layer)
+                radarLayer.addSublayer(layer)
             }
         }
     }
@@ -96,6 +114,7 @@ public class ShadowRadar: UIView {
         super.init(frame: frame)
         
         layer.addSublayer(backgroundLayer)
+        layer.addSublayer(radarLayer)
         layer.addSublayer(levelLayer)
     }
     
@@ -113,9 +132,28 @@ public class ShadowRadar: UIView {
     public override var bounds: CGRect {
         didSet {
             backgroundLayer.frame = bounds
+            radarLayer.frame = bounds
+            radarLayer.sublayers?.forEach { $0.frame = bounds }
             levelLayer.frame = bounds
             levelLayer.sublayers?.forEach { $0.frame = bounds }
         }
+    }
+    
+    public func addRadar(levels: [Int], color: UIColor) {
+        let max = maxLevel ?? 1
+        let layer = ShapeLayer()
+        layer.layerPath = .custom {
+            let radius = self.bounds.width / 2
+            let points = Const.points(
+                center: CGPoint(x: radius, y: radius),
+                radius: radius,
+                levels: levels,
+                maxLevel: max
+            )
+            $0.addPoints(points)
+        }
+        layer.backgroundColor = color.cgColor
+        levelLayer.addSublayer(layer)
     }
     
 }
