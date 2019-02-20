@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         radar.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
         radar.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         radar.titleColor = .white
+        radar.titleMargin = 10
         return radar
     }()
 
