@@ -27,7 +27,7 @@
 import UIKit
 import ShapeView
 
-fileprivate struct Const {
+struct Const {
     
     static let vertex = Array(0 ... 5)
     static let angles: [CGFloat] = [90, 30, 330, 270, 210, 150].map { .pi * CGFloat($0) / 180.0 }

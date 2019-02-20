@@ -33,6 +33,17 @@ class ViewController: UIViewController {
         radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
         return radar
     }()
+    
+    private lazy var titleRadar: ShadowTitleRadar = {
+        let radar = ShadowTitleRadar()
+        radar.maxLevel = 4
+        radar.addRadar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75))
+        radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
+        radar.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
+        radar.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
+        radar.titleColor = .white
+        return radar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +51,7 @@ class ViewController: UIViewController {
         view.addSubview(backgroundImageView)
         view.addSubview(blurView)
         view.addSubview(radar)
+        view.addSubview(titleRadar)
         createConstraints()
         
         view.setNeedsLayout()
@@ -47,11 +59,22 @@ class ViewController: UIViewController {
     }
 
     private func createConstraints() {
+        
         radar.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().offset(100)
+            $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.5)
             $0.height.equalTo(radar.snp.width)
+            
         }
+        
+        titleRadar.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(radar.snp.bottom).offset(20)
+            $0.height.equalTo(radar)
+            $0.width.equalTo(radar.snp.width).multipliedBy(1.5)
+        }
+        
     }
     
 }

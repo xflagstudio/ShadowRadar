@@ -30,13 +30,18 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'ShadowRadar/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'ShadowRadar' => ['ShadowRadar/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'ShapeView', '~> 0.3'
+  
+  s.default_subspec = 'Core'
+  
+    s.subspec 'Core' do |core|
+      core.source_files = 'ShadowRadar/Classes/**/*'
+    end
+    
+    s.subspec 'Title' do |title|
+      title.dependency 'ShadowRadar/Core', '~> 0'
+      title.dependency 'SnapKit', '~> 4.2'
+      title.source_files = 'ShadowRadar/Classes/Title/**/*'
+    end
+  
 end
