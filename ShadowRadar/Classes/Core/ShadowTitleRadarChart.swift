@@ -29,6 +29,11 @@ import SnapKit
 
 public class ShadowTitleRadarChart: UIView {
     
+    public enum TitleAlignment {
+        case center
+        case leftRight
+    }
+
     private lazy var radarChart = ShadowRadarChart()
     
     private lazy var titleLabels = Const.vertex.map { _ -> UILabel in
@@ -79,7 +84,21 @@ public class ShadowTitleRadarChart: UIView {
         }
     }
     
+    public var titleMinimumScaleFactor: CGFloat? {
+        didSet {
+            guard let scaleFactor = titleMinimumScaleFactor else {
+                return
+            }
+            titleLabels.forEach {
+                $0.minimumScaleFactor = scaleFactor
+                $0.adjustsFontSizeToFitWidth = true
+            }
+        }
+    }
+    
     public var titleMargin: CGFloat = 5
+    
+    public var titleAlignment: TitleAlignment = .center
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -110,32 +129,77 @@ public class ShadowTitleRadarChart: UIView {
             $0.bottom.equalToSuperview()
         }
 
-        let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
-        let verticalOffset = radarHeight / 4.0
-        let horizontalOffset = radarHeight * (1 - sin(.pi / 3.0)) / 2.0
-        
-        titleLabels[1].snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
-            $0.centerY.equalTo(radarChart).offset(-verticalOffset)
-        }
-        
-        titleLabels[2].snp.makeConstraints {
-            $0.right.equalToSuperview()
-            $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
-            $0.centerY.equalTo(radarChart).offset(verticalOffset)
-        }
-        
-        titleLabels[4].snp.makeConstraints {
-            $0.left.equalToSuperview()
-            $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
-            $0.centerY.equalTo(radarChart).offset(verticalOffset)
-        }
-        
-        titleLabels[5].snp.makeConstraints {
-            $0.left.equalToSuperview()
-            $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
-            $0.centerY.equalTo(radarChart).offset(-verticalOffset)
+        switch titleAlignment {
+            
+        case .center:
+            let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
+            let verticalOffset = radarHeight / 4.0
+            let horizontalOffset = radarHeight * (1 - sin(.pi / 3.0)) / 2.0
+            
+            titleLabels[1].snp.makeConstraints {
+                $0.right.equalToSuperview()
+                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
+            }
+            
+            titleLabels[2].snp.makeConstraints {
+                $0.right.equalToSuperview()
+                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
+            }
+            
+            titleLabels[4].snp.makeConstraints {
+                $0.left.equalToSuperview()
+                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
+            }
+            
+            titleLabels[5].snp.makeConstraints {
+                $0.left.equalToSuperview()
+                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
+            }
+        case .leftRight:
+            
+            titleLabels.enumerated().forEach {
+                switch $0 {
+                case 1, 2:
+                    $1.textAlignment = .left
+                case 4, 5:
+                    $1.textAlignment = .right
+                default:
+                    $1.textAlignment = .center
+                }
+            }
+            
+            let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
+            let radius = radarHeight / 2.0 + titleMargin
+            let verticalOffset = radius * sin(.pi / 6.0)
+            let horizontalOffset = radius * cos(.pi / 6.0)
+            
+            titleLabels[1].snp.makeConstraints {
+                $0.right.equalToSuperview()
+                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
+            }
+            
+            titleLabels[2].snp.makeConstraints {
+                $0.right.equalToSuperview()
+                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
+            }
+            
+            titleLabels[4].snp.makeConstraints {
+                $0.left.equalToSuperview()
+                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
+            }
+            
+            titleLabels[5].snp.makeConstraints {
+                $0.left.equalToSuperview()
+                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
+            }
         }
         
     }
