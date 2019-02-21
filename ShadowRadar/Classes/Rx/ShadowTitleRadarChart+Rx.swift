@@ -1,5 +1,5 @@
 //
-//  ShadowShadowRadar+Rx.swift
+//  ShadowTitleRadarChart+Rx.swift
 //  ShadowRadar
 //
 //  Created by Meng Li on 2019/02/21.
@@ -27,7 +27,7 @@
 import RxSwift
 import RxCocoa
 
-public extension Reactive where Base: ShadowRadarChart {
+public extension Reactive where Base: ShadowTitleRadarChart {
     
     public var maxLevel: Binder<Int> {
         return Binder(self.base) { (chart, maxLevel) in

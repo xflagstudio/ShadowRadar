@@ -34,8 +34,8 @@ public class ShadowTitleRadarChart: UIView {
         case leftRight
     }
 
-    private lazy var shadowRadar = ShadowRadarChart()
-
+    private lazy var radarChart = ShadowRadarChart()
+    
     private lazy var titleLabels = Const.vertex.map { _ -> UILabel in
         let label = UILabel()
         label.textAlignment = .center
@@ -45,13 +45,13 @@ public class ShadowTitleRadarChart: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(shadowRadar)
+        addSubview(radarChart)
         titleLabels.forEach { addSubview($0) }
     }
     
     public var maxLevel: Int? {
         didSet {
-            shadowRadar.maxLevel = maxLevel
+            radarChart.maxLevel = maxLevel
         }
     }
     
@@ -112,11 +112,11 @@ public class ShadowTitleRadarChart: UIView {
     
     private func createConstraints() {
         
-        shadowRadar.snp.makeConstraints {
+        radarChart.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabels[0].snp.bottom).offset(titleMargin)
             $0.bottom.equalTo(titleLabels[3].snp.top).offset(-titleMargin)
-            $0.width.equalTo(shadowRadar.snp.height)
+            $0.width.equalTo(radarChart.snp.height)
         }
         
         titleLabels[0].snp.makeConstraints {
@@ -138,26 +138,26 @@ public class ShadowTitleRadarChart: UIView {
             
             titleLabels[1].snp.makeConstraints {
                 $0.right.equalToSuperview()
-                $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
             }
             
             titleLabels[2].snp.makeConstraints {
                 $0.right.equalToSuperview()
-                $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
             }
             
             titleLabels[4].snp.makeConstraints {
                 $0.left.equalToSuperview()
-                $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
             }
             
             titleLabels[5].snp.makeConstraints {
                 $0.left.equalToSuperview()
-                $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
             }
         case .leftRight:
             
@@ -179,33 +179,41 @@ public class ShadowTitleRadarChart: UIView {
             
             titleLabels[1].snp.makeConstraints {
                 $0.right.equalToSuperview()
-                $0.left.equalTo(shadowRadar.snp.centerX).offset(horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
             }
             
             titleLabels[2].snp.makeConstraints {
                 $0.right.equalToSuperview()
-                $0.left.equalTo(shadowRadar.snp.centerX).offset(horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
             }
             
             titleLabels[4].snp.makeConstraints {
                 $0.left.equalToSuperview()
-                $0.right.equalTo(shadowRadar.snp.centerX).offset(-horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(verticalOffset)
             }
             
             titleLabels[5].snp.makeConstraints {
                 $0.left.equalToSuperview()
-                $0.right.equalTo(shadowRadar.snp.centerX).offset(-horizontalOffset)
-                $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
+                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
             }
         }
         
     }
     
     public func addRadar(_ radar: Radar) {
-        shadowRadar.addRadar(radar)
+        radarChart.addRadar(radar)
+    }
+    
+    public func removeRadar(at index: Int) {
+        
+    }
+    
+    public func updateRadar(_ radar: Radar, at index: Int) {
+        radarChart.updateRadar(radar, at: index)
     }
     
 }

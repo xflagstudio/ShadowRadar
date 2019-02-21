@@ -96,6 +96,8 @@ class ViewController: UIViewController {
         
         viewModel.maxLevels.bind(to: radarChart.rx.maxLevel).disposed(by: disposeBag)
         viewModel.radar.bind(to: radarChart.rx.radar(at: 1)).disposed(by: disposeBag)
+        viewModel.maxLevels.bind(to: titleRadarChart.rx.maxLevel).disposed(by: disposeBag)
+        viewModel.radar.bind(to: titleRadarChart.rx.radar(at: 1)).disposed(by: disposeBag)
     }
 
     private func createConstraints() {
