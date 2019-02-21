@@ -1,5 +1,5 @@
 //
-//  ShadowRadar.swift
+//  ShadowRadarChart.swift
 //  ShadowRadar
 //
 //  Created by Meng Li on 2019/02/18.
@@ -82,7 +82,7 @@ public struct Radar {
     }
 }
 
-public class ShadowRadar: UIView {
+public class ShadowRadarChart: UIView {
     
     private var chartLayers: [CAShapeLayer] = []
     

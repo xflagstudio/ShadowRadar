@@ -1,5 +1,5 @@
 //
-//  ShadowTitleRadar.swift
+//  ShadowTitleRadarChart.swift
 //  ShadowRadar
 //
 //  Created by Meng Li on 2019/02/20.
@@ -27,9 +27,9 @@
 import UIKit
 import SnapKit
 
-public class ShadowTitleRadar: UIView {
+public class ShadowTitleRadarChart: UIView {
     
-    private lazy var shadowRadar = ShadowRadar()
+    private lazy var shadowRadar = ShadowRadarChart()
     
     private lazy var titleLabels = Const.vertex.map { _ -> UILabel in
         let label = UILabel()

@@ -27,24 +27,24 @@ class ViewController: UIViewController {
         return effectView
     }()
     
-    private lazy var radar: ShadowRadar = {
-        let radar = ShadowRadar()
-        radar.maxLevel = 4
-        radar.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
-        radar.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
-        return radar
+    private lazy var radarChart: ShadowRadarChart = {
+        let chart = ShadowRadarChart()
+        chart.maxLevel = 4
+        chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
+        return chart
     }()
     
-    private lazy var titleRadar: ShadowTitleRadar = {
-        let radar = ShadowTitleRadar()
-        radar.maxLevel = 4
-        radar.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
-        radar.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
-        radar.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
-        radar.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
-        radar.titleColor = .white
-        radar.titleMargin = 10
-        return radar
+    private lazy var titleRadarChart: ShadowTitleRadarChart = {
+        let chart = ShadowTitleRadarChart()
+        chart.maxLevel = 4
+        chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
+        chart.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
+        chart.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
+        chart.titleColor = .white
+        chart.titleMargin = 10
+        return chart
     }()
     
     private lazy var updateLevelsButton: UIButton = {
@@ -88,37 +88,37 @@ class ViewController: UIViewController {
 
         view.addSubview(backgroundImageView)
         view.addSubview(blurView)
-        view.addSubview(radar)
-        view.addSubview(titleRadar)
+        view.addSubview(radarChart)
+        view.addSubview(titleRadarChart)
         view.addSubview(updateLevelsButton)
         view.addSubview(updateChartButton)
         createConstraints()
         
-        viewModel.maxLevels.bind(to: radar.rx.maxLevel).disposed(by: disposeBag)
-        viewModel.radar.bind(to: radar.rx.radar(at: 1)).disposed(by: disposeBag)
+        viewModel.maxLevels.bind(to: radarChart.rx.maxLevel).disposed(by: disposeBag)
+        viewModel.radar.bind(to: radarChart.rx.radar(at: 1)).disposed(by: disposeBag)
     }
 
     private func createConstraints() {
         
-        radar.snp.makeConstraints {
+        radarChart.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.5)
-            $0.height.equalTo(radar.snp.width)
+            $0.height.equalTo(radarChart.snp.width)
             
         }
         
-        titleRadar.snp.makeConstraints {
+        titleRadarChart.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(radar.snp.bottom).offset(20)
-            $0.height.equalTo(radar)
-            $0.width.equalTo(radar.snp.width).multipliedBy(1.5)
+            $0.top.equalTo(radarChart.snp.bottom).offset(20)
+            $0.height.equalTo(radarChart)
+            $0.width.equalTo(radarChart.snp.width).multipliedBy(1.5)
         }
         
         updateLevelsButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.right.equalToSuperview().offset(-20)
-            $0.top.equalTo(titleRadar.snp.bottom).offset(20)
+            $0.top.equalTo(titleRadarChart.snp.bottom).offset(20)
             $0.height.equalTo(44)
         }
         
