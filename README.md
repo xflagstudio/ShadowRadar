@@ -20,30 +20,40 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ShadowRadar is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-- Using without titles.
-
 ```ruby
 pod 'ShadowRadar'
 ```
 
-- Using with titles.
+The submodule `Rx` is prepared for using this library with the RxSwift extension.
 
 ```ruby
-pod 'ShadowRadar/Title'
+pod 'ShadowRadar/Rx'
 ```
 
 The following codes shows a demo to create a radar chart with titles.
 
 ```Swift
-let radar = ShadowTitleRadar()
-radar.maxLevel = 4
-radar.addRadar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75))
-radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
-radar.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
-radar.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
-radar.titleColor = .white
-radar.titleMargin = 5
+let chart = ShadowTitleRadarChart()
+chart.maxLevel = 4
+chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
+chart.titles = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled()
+chart.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
+chart.titleColor = .white
+chart.titleMargin = 10
+chart.titleAlignment = .leftRight
 ```
+
+#### RxSwift
+
+`maxLevel`, `radar(at: Int)`, and `titles` can be updated with the RxSwift extension.
+
+```Swift
+viewModel.maxLevel.bind(to: titleRadarChart.rx.maxLevel).disposed(by: disposeBag)
+viewModel.radar.bind(to: titleRadarChart.rx.radar(at: 1)).disposed(by: disposeBag)
+viewModel.titles.bind(to: titleRadarChart.rx.titles).disposed(by: disposeBag)
+```
+
 
 ## License
 
