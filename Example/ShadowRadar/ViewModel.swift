@@ -12,16 +12,16 @@ import ShadowRadar
 
 class ViewModel {
     
-    let maxLevels = BehaviorRelay<Int>(value: 5)
+    let maxLevel = BehaviorRelay<Int>(value: 5)
     let radar = PublishSubject<Radar>()
     
     func updateLevelsButton() {
-        maxLevels.accept(Int.random(in: 3 ... 8))
+        maxLevel.accept(Int.random(in: 3 ... 8))
 
     }
     
     func updateRadar() {
-        let levels = self.maxLevels.value
+        let levels = self.maxLevel.value
         radar.onNext(Radar(levels: (0 ... levels).map { _ in Int.random(in: 1 ... levels)}, color: .random))
     }
     

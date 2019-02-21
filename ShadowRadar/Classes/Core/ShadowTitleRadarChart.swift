@@ -209,7 +209,7 @@ public class ShadowTitleRadarChart: UIView {
     }
     
     public func removeRadar(at index: Int) {
-        
+        radarChart.removeRadar(at: index)
     }
     
     public func updateRadar(_ radar: Radar, at index: Int) {

@@ -171,6 +171,18 @@ public class ShadowRadarChart: UIView {
         layer.backgroundColor = radar.color.cgColor
     }
     
+    private func findChartLayer(at index: Int) -> ShapeLayer? {
+        guard
+            let sublayers = levelLayer.sublayers,
+            0 ..< sublayers.count ~= index,
+            let chartLayer = sublayers[index] as? ShapeLayer
+        else {
+            NSLog("[ShadowRadar] Cannot find a layer with index %d", index)
+            return nil
+        }
+        return chartLayer
+    }
+    
     public func addRadar(_ radar: Radar) {
         let layer = ShapeLayer()
         setRadar(radar, for: layer)
@@ -178,18 +190,13 @@ public class ShadowRadarChart: UIView {
     }
     
     public func removeRadar(at index: Int) {
-        
+        findChartLayer(at: index)?.removeFromSuperlayer()
     }
     
     public func updateRadar(_ radar: Radar, at index: Int) {
-        guard
-            let sublayers = levelLayer.sublayers,
-            0 ..< sublayers.count ~= index,
-            let chartLayer = sublayers[index] as? ShapeLayer
-        else {
-            return
+        if let layer = findChartLayer(at: index) {
+            setRadar(radar, for: layer)
         }
-        setRadar(radar, for: chartLayer)
     }
     
 }
