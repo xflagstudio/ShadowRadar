@@ -41,4 +41,10 @@ public extension Reactive where Base: ShadowTitleRadarChart {
         }
     }
     
+    public var titles: Binder<[String]> {
+        return Binder(self.base) { (chart, titles) in
+            chart.titles = titles
+        }
+    }
+    
 }

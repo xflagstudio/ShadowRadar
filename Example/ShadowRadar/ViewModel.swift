@@ -14,6 +14,7 @@ class ViewModel {
     
     let maxLevel = BehaviorRelay<Int>(value: 5)
     let radar = PublishSubject<Radar>()
+    let titles = PublishSubject<[String]>()
     
     func updateLevelsButton() {
         maxLevel.accept(Int.random(in: 3 ... 8))
@@ -23,6 +24,10 @@ class ViewModel {
     func updateRadar() {
         let levels = self.maxLevel.value
         radar.onNext(Radar(levels: (0 ... levels).map { _ in Int.random(in: 1 ... levels)}, color: .random))
+    }
+    
+    func updateTitles() {
+        titles.onNext(["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled())
     }
     
 }

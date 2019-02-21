@@ -40,10 +40,11 @@ class ViewController: UIViewController {
         chart.maxLevel = 4
         chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
         chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
-        chart.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
+        chart.titles = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled()
         chart.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         chart.titleColor = .white
         chart.titleMargin = 10
+        chart.titleAlignment = .leftRight
         return chart
     }()
     
@@ -71,6 +72,18 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private lazy var updateTitlesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update Chart", for: .normal)
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.rx.tap.bind { [unowned self] in
+            self.viewModel.updateTitles()
+        }.disposed(by: disposeBag)
+        return button
+    }()
+    
     private let viewModel: ViewModel
     private let disposeBag = DisposeBag()
     
@@ -92,12 +105,14 @@ class ViewController: UIViewController {
         view.addSubview(titleRadarChart)
         view.addSubview(updateLevelsButton)
         view.addSubview(updateChartButton)
+        view.addSubview(updateTitlesButton)
         createConstraints()
         
         viewModel.maxLevel.bind(to: radarChart.rx.maxLevel).disposed(by: disposeBag)
         viewModel.radar.bind(to: radarChart.rx.radar(at: 1)).disposed(by: disposeBag)
         viewModel.maxLevel.bind(to: titleRadarChart.rx.maxLevel).disposed(by: disposeBag)
         viewModel.radar.bind(to: titleRadarChart.rx.radar(at: 1)).disposed(by: disposeBag)
+        viewModel.titles.bind(to: titleRadarChart.rx.titles).disposed(by: disposeBag)
     }
 
     private func createConstraints() {
@@ -128,6 +143,12 @@ class ViewController: UIViewController {
             $0.size.equalTo(updateLevelsButton)
             $0.centerX.equalTo(updateLevelsButton)
             $0.top.equalTo(updateLevelsButton.snp.bottom).offset(20)
+        }
+        
+        updateTitlesButton.snp.makeConstraints {
+            $0.size.equalTo(updateLevelsButton)
+            $0.centerX.equalTo(updateLevelsButton)
+            $0.top.equalTo(updateChartButton.snp.bottom).offset(20)
         }
         
     }
