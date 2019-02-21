@@ -29,8 +29,13 @@ import SnapKit
 
 public class ShadowTitleRadarChart: UIView {
     
+    public enum TitleAlignment {
+        case center
+        case leftRight
+    }
+
     private lazy var shadowRadar = ShadowRadarChart()
-    
+
     private lazy var titleLabels = Const.vertex.map { _ -> UILabel in
         let label = UILabel()
         label.textAlignment = .center
@@ -38,10 +43,20 @@ public class ShadowTitleRadarChart: UIView {
     }
     
     public override init(frame: CGRect) {
+        titleAlignment = .center
         super.init(frame: frame)
 
         addSubview(shadowRadar)
         titleLabels.forEach { addSubview($0) }
+    }
+    
+    public init(frame: CGRect, titleAlignment: TitleAlignment = .center) {
+        self.titleAlignment = titleAlignment
+        super.init(frame: frame)
+        
+        addSubview(shadowRadar)
+        titleLabels.forEach { addSubview($0) }
+
     }
     
     public var maxLevel: Int? {
@@ -80,6 +95,18 @@ public class ShadowTitleRadarChart: UIView {
     }
     
     public var titleMargin: CGFloat = 5
+    
+    public var titleAlignment: TitleAlignment {
+        didSet {
+            guard titleAlignment != oldValue else { return }
+            switch titleAlignment {
+            case .center:
+                changeTitleAlignmentToCenter()
+            case .leftRight:
+                changeTitleAlignmentToLeftRight()
+            }
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -135,6 +162,84 @@ public class ShadowTitleRadarChart: UIView {
         titleLabels[5].snp.makeConstraints {
             $0.left.equalToSuperview()
             $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+        }
+        
+    }
+    
+    private func changeTitleAlignmentToCenter() {
+        
+        titleLabels.forEach { $0.textAlignment = .center }
+        
+        let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
+        let verticalOffset = radarHeight / 4.0
+        let horizontalOffset = radarHeight * (1 - sin(.pi / 3.0)) / 2.0
+        
+        titleLabels[1].snp.updateConstraints {
+            $0.right.equalToSuperview()
+            $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+        }
+        
+        titleLabels[2].snp.updateConstraints {
+            $0.right.equalToSuperview()
+            $0.left.equalTo(shadowRadar.snp.right).offset(-horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+        }
+        
+        titleLabels[4].snp.updateConstraints {
+            $0.left.equalToSuperview()
+            $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+        }
+        
+        titleLabels[5].snp.updateConstraints {
+            $0.left.equalToSuperview()
+            $0.right.equalTo(shadowRadar.snp.left).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+        }
+        
+    }
+    
+    private func changeTitleAlignmentToLeftRight() {
+        
+        titleLabels.enumerated().forEach {
+            switch $0 {
+            case 1, 2:
+                $1.textAlignment = .left
+            case 4, 5:
+                $1.textAlignment = .right
+            default:
+                $1.textAlignment = .center
+            }
+        }
+        
+        let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
+        let radius = radarHeight / 2.0 + titleMargin
+        let verticalOffset = radius * sin(.pi / 6.0)
+        let horizontalOffset = radius * cos(.pi / 6.0)
+        
+        titleLabels[1].snp.updateConstraints {
+            $0.right.equalToSuperview()
+            $0.left.equalTo(shadowRadar.snp.centerX).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
+        }
+        
+        titleLabels[2].snp.updateConstraints {
+            $0.right.equalToSuperview()
+            $0.left.equalTo(shadowRadar.snp.centerX).offset(horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+        }
+        
+        titleLabels[4].snp.updateConstraints {
+            $0.left.equalToSuperview()
+            $0.right.equalTo(shadowRadar.snp.centerX).offset(-horizontalOffset)
+            $0.centerY.equalTo(shadowRadar).offset(verticalOffset)
+        }
+        
+        titleLabels[5].snp.updateConstraints {
+            $0.left.equalToSuperview()
+            $0.right.equalTo(shadowRadar.snp.centerX).offset(-horizontalOffset)
             $0.centerY.equalTo(shadowRadar).offset(-verticalOffset)
         }
         
