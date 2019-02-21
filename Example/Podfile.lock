@@ -1,19 +1,30 @@
 PODS:
+  - RxAtomic (4.4.1)
+  - RxCocoa (4.4.1):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.4.1):
+    - RxAtomic (~> 4.4)
   - ShadowRadar/Core (0.1):
     - ShapeView (~> 0.3)
-  - ShadowRadar/Title (0.1):
+    - SnapKit (~> 4.2)
+  - ShadowRadar/Rx (0.1):
+    - RxCocoa (~> 4.2)
     - ShadowRadar/Core (~> 0)
     - ShapeView (~> 0.3)
     - SnapKit (~> 4.2)
-  - ShapeView (0.3)
+  - ShapeView (0.3.2)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
-  - ShadowRadar/Title (from `../`)
+  - RxCocoa
+  - ShadowRadar/Rx (from `../`)
   - SnapKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - RxAtomic
+    - RxCocoa
+    - RxSwift
     - ShapeView
     - SnapKit
 
@@ -22,10 +33,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ShadowRadar: 1369fffe464c887169056d8e8adbf72aea8ce299
-  ShapeView: df975a526acf1b59d50a2fef4020f0214671a1d9
+  RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
+  RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
+  RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
+  ShadowRadar: 652adcd1d7fe980762805ea6bcd21e03157272e6
+  ShapeView: e2ec4a48256d87b75e5e83e3e69a9e878f6e4c1f
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 9fdf151364ec30975aeb8532279af8a7a46000d3
+PODFILE CHECKSUM: 5e4a605ee82757af92f9e0814acb743d7e5af078
 
 COCOAPODS: 1.6.0

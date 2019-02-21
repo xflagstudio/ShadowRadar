@@ -30,17 +30,18 @@ ShadowRadar is a radar chart view with shadow.
   s.ios.deployment_target = '9.0'
 
   s.dependency 'ShapeView', '~> 0.3'
-  
+  s.dependency 'SnapKit', '~> 4.2'
+
   s.default_subspec = 'Core'
   
     s.subspec 'Core' do |core|
       core.source_files = 'ShadowRadar/Classes/Core/**/*'
     end
     
-    s.subspec 'Title' do |title|
+    s.subspec 'Rx' do |title|
       title.dependency 'ShadowRadar/Core', '~> 0'
-      title.dependency 'SnapKit', '~> 4.2'
-      title.source_files = 'ShadowRadar/Classes/Title/**/*'
+      title.dependency 'RxCocoa', '~> 4.2'
+      title.source_files = 'ShadowRadar/Classes/Rx/**/*'
     end
   
 end
