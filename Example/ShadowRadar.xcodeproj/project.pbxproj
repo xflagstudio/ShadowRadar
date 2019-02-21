@@ -14,6 +14,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		6CF89EABF9180F41635FC333 /* Pods_ShadowRadar_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90D5E1968BB368E13A77A1D4 /* Pods_ShadowRadar_Example.framework */; };
+		7709B3DB221E781C00CE40DF /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7709B3DA221E781C00CE40DF /* ViewModel.swift */; };
 		77419EEB221C0485000E92BB /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77419EEA221C0485000E92BB /* background.jpg */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		67DE9B0EC59964C37F09E2CB /* Pods-ShadowRadar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShadowRadar_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ShadowRadar_Tests/Pods-ShadowRadar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		7709B3DA221E781C00CE40DF /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		77419EEA221C0485000E92BB /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		90D5E1968BB368E13A77A1D4 /* Pods_ShadowRadar_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShadowRadar_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BD19496A4D1ED4DB61FBA1 /* ShadowRadar.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ShadowRadar.podspec; path = ../ShadowRadar.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -95,6 +97,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				7709B3DA221E781C00CE40DF /* ViewModel.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -363,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				7709B3DB221E781C00CE40DF /* ViewModel.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,12 +3,13 @@
 //  ShadowRadar
 //
 //  Created by Meng Li on 2019/02/19.
-//  Copyright © 2018 XFLAG. All rights reserved.
+//  Copyright © 2019 XFLAG. All rights reserved.
 //
 
 import UIKit
 import SnapKit
 import ShadowRadar
+import RxSwift
 
 class ViewController: UIViewController {
     
@@ -45,7 +46,31 @@ class ViewController: UIViewController {
         radar.titleMargin = 10
         return radar
     }()
-
+    
+    private lazy var updateRadarButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update", for: .normal)
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.rx.tap.bind { [unowned self] in
+            self.viewModel.update()
+        }.disposed(by: disposeBag)
+        return button
+    }()
+    
+    private let viewModel: ViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,10 +78,10 @@ class ViewController: UIViewController {
         view.addSubview(blurView)
         view.addSubview(radar)
         view.addSubview(titleRadar)
+        view.addSubview(updateRadarButton)
         createConstraints()
         
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
+        viewModel.maxLevel.bind(to: radar.rx.maxLevel).disposed(by: disposeBag)
     }
 
     private func createConstraints() {
@@ -74,6 +99,13 @@ class ViewController: UIViewController {
             $0.top.equalTo(radar.snp.bottom).offset(20)
             $0.height.equalTo(radar)
             $0.width.equalTo(radar.snp.width).multipliedBy(1.5)
+        }
+        
+        updateRadarButton.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20)
+            $0.right.equalToSuperview().offset(-20)
+            $0.top.equalTo(titleRadar.snp.bottom).offset(20)
+            $0.height.equalTo(44)
         }
         
     }

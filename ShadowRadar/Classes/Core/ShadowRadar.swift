@@ -95,6 +95,7 @@ public class ShadowRadar: UIView {
             guard let maxLevel = maxLevel, maxLevel > 1 else {
                 return
             }
+            radarLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
 
             (1 ..< maxLevel).map { maxLevel - $0 }.forEach { level in
                 let layer = ShapeLayer()
@@ -106,6 +107,10 @@ public class ShadowRadar: UIView {
                 }
                 layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
                 radarLayer.addSublayer(layer)
+            }
+            
+            if bounds != .zero {
+                radarLayer.sublayers?.forEach { $0.frame = bounds }
             }
         }
     }
