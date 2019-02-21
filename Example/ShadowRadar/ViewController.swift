@@ -66,14 +66,10 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.rx.tap.bind { [unowned self] in
-            self.updateChart()
+            self.viewModel.updateRadar()
         }.disposed(by: disposeBag)
         return button
     }()
-    
-    private func updateChart() {
-        radar.updateRadar(Radar(levels: (0 ... 5).map { _ in Int.random(in: 1 ... 4)}, color: .random), at: 1)
-    }
     
     private let viewModel: ViewModel
     private let disposeBag = DisposeBag()
@@ -98,7 +94,8 @@ class ViewController: UIViewController {
         view.addSubview(updateChartButton)
         createConstraints()
         
-        viewModel.maxLevel.bind(to: radar.rx.maxLevel).disposed(by: disposeBag)
+        viewModel.maxLevels.bind(to: radar.rx.maxLevel).disposed(by: disposeBag)
+        viewModel.radar.bind(to: radar.rx.radar(at: 1)).disposed(by: disposeBag)
     }
 
     private func createConstraints() {

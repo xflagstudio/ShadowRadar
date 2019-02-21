@@ -30,8 +30,14 @@ import RxCocoa
 public extension Reactive where Base: ShadowRadar {
     
     public var maxLevel: Binder<Int> {
-        return Binder(self.base) { (radar, maxLevel) in
-            radar.maxLevel = maxLevel
+        return Binder(self.base) { (shadowRadar, maxLevel) in
+            shadowRadar.maxLevel = maxLevel
+        }
+    }
+    
+    public func radar(at index: Int) -> Binder<Radar> {
+        return Binder(self.base) { (shadowRadar, radar) in
+            shadowRadar.updateRadar(radar, at: index)
         }
     }
     
