@@ -140,8 +140,8 @@ public class ShadowTitleRadar: UIView {
         
     }
     
-    public func addRadar(levels: [Int], color: UIColor) {
-        shadowRadar.addRadar(levels: levels, color: color)
+    public func addRadar(_ radar: Radar) {
+        shadowRadar.addRadar(radar)
     }
     
 }

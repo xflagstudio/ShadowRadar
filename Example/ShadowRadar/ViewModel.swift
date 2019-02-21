@@ -12,7 +12,7 @@ class ViewModel {
     
     let maxLevel = PublishSubject<Int>()
     
-    func update() {
+    func updateLevelsButton() {
         maxLevel.onNext(Int.random(in: 3 ... 8))
     }
     

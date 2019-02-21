@@ -30,16 +30,16 @@ class ViewController: UIViewController {
     private lazy var radar: ShadowRadar = {
         let radar = ShadowRadar()
         radar.maxLevel = 4
-        radar.addRadar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75))
-        radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
+        radar.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        radar.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
         return radar
     }()
     
     private lazy var titleRadar: ShadowTitleRadar = {
         let radar = ShadowTitleRadar()
         radar.maxLevel = 4
-        radar.addRadar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75))
-        radar.addRadar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75))
+        radar.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        radar.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
         radar.titles = ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6"]
         radar.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         radar.titleColor = .white
@@ -47,17 +47,33 @@ class ViewController: UIViewController {
         return radar
     }()
     
-    private lazy var updateRadarButton: UIButton = {
+    private lazy var updateLevelsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Update", for: .normal)
+        button.setTitle("Update Max Levels", for: .normal)
         button.backgroundColor = .darkGray
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.rx.tap.bind { [unowned self] in
-            self.viewModel.update()
+            self.viewModel.updateLevelsButton()
         }.disposed(by: disposeBag)
         return button
     }()
+    
+    private lazy var updateChartButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update Chart", for: .normal)
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.rx.tap.bind { [unowned self] in
+            self.updateChart()
+        }.disposed(by: disposeBag)
+        return button
+    }()
+    
+    private func updateChart() {
+        radar.updateRadar(Radar(levels: (0 ... 5).map { _ in Int.random(in: 1 ... 4)}, color: .random), at: 1)
+    }
     
     private let viewModel: ViewModel
     private let disposeBag = DisposeBag()
@@ -78,7 +94,8 @@ class ViewController: UIViewController {
         view.addSubview(blurView)
         view.addSubview(radar)
         view.addSubview(titleRadar)
-        view.addSubview(updateRadarButton)
+        view.addSubview(updateLevelsButton)
+        view.addSubview(updateChartButton)
         createConstraints()
         
         viewModel.maxLevel.bind(to: radar.rx.maxLevel).disposed(by: disposeBag)
@@ -101,11 +118,17 @@ class ViewController: UIViewController {
             $0.width.equalTo(radar.snp.width).multipliedBy(1.5)
         }
         
-        updateRadarButton.snp.makeConstraints {
+        updateLevelsButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.right.equalToSuperview().offset(-20)
             $0.top.equalTo(titleRadar.snp.bottom).offset(20)
             $0.height.equalTo(44)
+        }
+        
+        updateChartButton.snp.makeConstraints {
+            $0.size.equalTo(updateLevelsButton)
+            $0.centerX.equalTo(updateLevelsButton)
+            $0.top.equalTo(updateLevelsButton.snp.bottom).offset(20)
         }
         
     }

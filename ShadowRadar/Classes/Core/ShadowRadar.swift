@@ -72,7 +72,19 @@ extension UIBezierPath {
     
 }
 
+public struct Radar {
+    var levels: [Int]
+    var color: UIColor
+    
+    public init(levels: [Int], color: UIColor) {
+        self.levels = levels
+        self.color = color
+    }
+}
+
 public class ShadowRadar: UIView {
+    
+    private var chartLayers: [CAShapeLayer] = []
     
     private lazy var backgroundLayer: ShapeLayer = {
         let layer = ShapeLayer()
@@ -126,14 +138,7 @@ public class ShadowRadar: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func starPath(in center: CGPoint, with radius: CGFloat) -> UIBezierPath {
-        let path = UIBezierPath()
-        path.addPoints(Const.points(center: center, radius: radius))
-        path.close()
-        return path
-    }
-    
+
     public override var bounds: CGRect {
         didSet {
             backgroundLayer.frame = bounds
@@ -144,21 +149,47 @@ public class ShadowRadar: UIView {
         }
     }
     
-    public func addRadar(levels: [Int], color: UIColor) {
+    private func starPath(in center: CGPoint, with radius: CGFloat) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.addPoints(Const.points(center: center, radius: radius))
+        path.close()
+        return path
+    }
+    
+    private func setRadar(_ radar: Radar, for layer: ShapeLayer) {
         let max = maxLevel ?? 1
-        let layer = ShapeLayer()
         layer.layerPath = .custom {
             let radius = self.bounds.width / 2
             let points = Const.points(
                 center: CGPoint(x: radius, y: radius),
                 radius: radius,
-                levels: levels,
+                levels: radar.levels,
                 maxLevel: max
             )
             $0.addPoints(points)
         }
-        layer.backgroundColor = color.cgColor
+        layer.backgroundColor = radar.color.cgColor
+    }
+    
+    public func addRadar(_ radar: Radar) {
+        let layer = ShapeLayer()
+        setRadar(radar, for: layer)
         levelLayer.addSublayer(layer)
+    }
+    
+    public func removeRadar(at index: Int) {
+        
+    }
+    
+    public func updateRadar(_ radar: Radar, at index: Int) {
+        guard
+            let sublayers = levelLayer.sublayers,
+            0 ..< sublayers.count ~= index,
+            let chartLayer = sublayers[index] as? ShapeLayer
+        else {
+            return
+        }
+        setRadar(radar, for: chartLayer)
     }
     
 }
