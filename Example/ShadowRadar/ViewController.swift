@@ -74,7 +74,7 @@ class ViewController: UIViewController {
     
     private lazy var updateTitlesButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Update Chart", for: .normal)
+        button.setTitle("Update Title", for: .normal)
         button.backgroundColor = .darkGray
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true

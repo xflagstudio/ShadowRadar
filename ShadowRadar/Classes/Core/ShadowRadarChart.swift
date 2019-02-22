@@ -104,13 +104,52 @@ public class ShadowRadarChart: UIView {
                     let currentRadius = radius * CGFloat(level) / CGFloat(maxLevel)
                     $0.addPoints(Const.points(center: center, radius: currentRadius))
                 }
-                layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
+                layer.innerShadow = innerShadow
+                if level == maxLevel {
+                    layer.outerShadow = outerShadow
+                    layer.backgroundColor = radarColor.cgColor
+                }
                 radarLayer.addSublayer(layer)
             }
             
             if bounds != .zero {
                 radarLayer.sublayers?.forEach { $0.frame = bounds }
             }
+        }
+    }
+    
+    public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+        didSet {
+            radarLayer.sublayers?.forEach {
+                guard let layer = $0 as? ShapeLayer else {
+                    return
+                }
+                layer.innerShadow = innerShadow
+            }
+        }
+    }
+    
+    public var outerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+        didSet {
+            guard
+                let layers = radarLayer.sublayers, layers.count > 0,
+                let radarLayer = layers[0] as? ShapeLayer
+            else {
+                return
+            }
+            radarLayer.outerShadow = outerShadow
+        }
+    }
+    
+    public var radarColor: UIColor = .clear {
+        didSet {
+            guard
+                let layers = radarLayer.sublayers, layers.count > 0,
+                let radarLayer = layers[0] as? ShapeLayer
+                else {
+                    return
+            }
+            radarLayer.backgroundColor = radarColor.cgColor
         }
     }
 
@@ -155,17 +194,17 @@ public class ShadowRadarChart: UIView {
         }
         layer.backgroundColor = radar.color.cgColor
     }
-    
+
     private func findChartLayer(at index: Int) -> ShapeLayer? {
         guard
             let sublayers = levelLayer.sublayers,
             0 ..< sublayers.count ~= index,
-            let chartLayer = sublayers[index] as? ShapeLayer
+            let layer = sublayers[index] as? ShapeLayer
         else {
-            NSLog("[ShadowRadar] Cannot find a layer with index %d", index)
+            NSLog("[ShadowRadar] Cannot find a chart layer with index %d", index)
             return nil
         }
-        return chartLayer
+        return layer
     }
     
     public func addRadar(_ radar: Radar) {
