@@ -86,19 +86,6 @@ public class ShadowRadarChart: UIView {
     
     private var chartLayers: [CAShapeLayer] = []
     
-    private lazy var backgroundLayer: ShapeLayer = {
-        let layer = ShapeLayer()
-        layer.layerPath = .custom {
-            let radius = self.bounds.width / 2
-            let center = CGPoint(x: radius, y: radius)
-            $0.addPoints(Const.points(center: center, radius: radius))
-        }
-        layer.backgroundColor = UIColor(white: 0.5, alpha: 0.3).cgColor
-        layer.innerShadow = ShapeShadow(raduis: 10, color: .lightGray)
-        layer.outerShadow = ShapeShadow(raduis: 20, color: .lightGray)
-        return layer
-    }()
-    
     private lazy var radarLayer = CALayer()
     private lazy var levelLayer = CALayer()
     
@@ -109,7 +96,7 @@ public class ShadowRadarChart: UIView {
             }
             radarLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
 
-            (1 ..< maxLevel).map { maxLevel - $0 }.forEach { level in
+            (0 ..< maxLevel).map { maxLevel - $0 }.forEach { level in
                 let layer = ShapeLayer()
                 layer.layerPath = .custom {
                     let radius = self.bounds.width / 2
@@ -129,8 +116,7 @@ public class ShadowRadarChart: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        layer.addSublayer(backgroundLayer)
+
         layer.addSublayer(radarLayer)
         layer.addSublayer(levelLayer)
     }
@@ -141,7 +127,6 @@ public class ShadowRadarChart: UIView {
 
     public override var bounds: CGRect {
         didSet {
-            backgroundLayer.frame = bounds
             radarLayer.frame = bounds
             radarLayer.sublayers?.forEach { $0.frame = bounds }
             levelLayer.frame = bounds
