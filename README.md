@@ -33,8 +33,14 @@ pod 'ShadowRadar/Rx'
 The following codes shows a demo to create a radar chart with titles.
 
 ```Swift
+import ShapeView
+import ShadowRadar
+
 let chart = ShadowTitleRadarChart()
 chart.maxLevel = 4
+chart.innerShadow = ShapeShadow(raduis: 5, color: .white, opacity: 0.5)
+chart.outerShadow = ShapeShadow(raduis: 5, color: .white, opacity: 0.5)
+chart.radarColor = .clear
 chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
 chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
 chart.titles = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled()
@@ -46,14 +52,16 @@ chart.titleAlignment = .leftRight
 
 #### RxSwift
 
-`maxLevel`, `radar(at: Int)`, and `titles` can be updated with the RxSwift extension.
+`maxLevel`, `innerShadow`, `outerShadow`, `radarColor`, `radar(at: Int)` and `titles` can be updated with the RxSwift extension.
 
 ```Swift
-viewModel.maxLevel.bind(to: titleRadarChart.rx.maxLevel).disposed(by: disposeBag)
-viewModel.radar.bind(to: titleRadarChart.rx.radar(at: 1)).disposed(by: disposeBag)
-viewModel.titles.bind(to: titleRadarChart.rx.titles).disposed(by: disposeBag)
+viewModel.maxLevel.bind(to: chart.rx.maxLevel).disposed(by: disposeBag)
+viewModel.radar.bind(to: chart.rx.radar(at: 1)).disposed(by: disposeBag)
+viewModel.titles.bind(to: chart.rx.titles).disposed(by: disposeBag)
+viewModel.innerShadow.bind(to: chart.rx.innerShadow).disposed(by: disposeBag)
+viewModel.outerShadow.bind(to: chart.rx.outerShadow).disposed(by: disposeBag)
+viewModel.radarColor.bind(to: chart.rx.radarColor).disposed(by: disposeBag)
 ```
-
 
 ## License
 
