@@ -26,12 +26,31 @@
 
 import RxSwift
 import RxCocoa
+import ShapeView
 
 public extension Reactive where Base: ShadowTitleRadarChart {
     
     public var maxLevel: Binder<Int> {
         return Binder(self.base) { (chart, maxLevel) in
             chart.maxLevel = maxLevel
+        }
+    }
+    
+    public var innerShadow: Binder<ShapeShadow> {
+        return Binder(self.base) { (chart, innerShadow) in
+            chart.innerShadow = innerShadow
+        }
+    }
+    
+    public var outerShadow: Binder<ShapeShadow> {
+        return Binder(self.base) { (chart, outerShadow) in
+            chart.outerShadow = outerShadow
+        }
+    }
+    
+    public var radarColor: Binder<UIColor?> {
+        return Binder(self.base) { (chart, radarColor) in
+            chart.radarColor = radarColor
         }
     }
     

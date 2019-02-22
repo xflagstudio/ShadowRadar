@@ -129,6 +129,9 @@ class ViewController: UIViewController {
         viewModel.shadow.bind(to: radarChart.rx.innerShadow).disposed(by: disposeBag)
         viewModel.shadow.bind(to: radarChart.rx.outerShadow).disposed(by: disposeBag)
         viewModel.radarColor.bind(to: radarChart.rx.radarColor).disposed(by: disposeBag)
+        viewModel.shadow.bind(to: titleRadarChart.rx.innerShadow).disposed(by: disposeBag)
+        viewModel.shadow.bind(to: titleRadarChart.rx.outerShadow).disposed(by: disposeBag)
+        viewModel.radarColor.bind(to: titleRadarChart.rx.radarColor).disposed(by: disposeBag)
     }
 
     private func createConstraints() {

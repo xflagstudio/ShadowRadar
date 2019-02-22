@@ -26,6 +26,7 @@
 
 import UIKit
 import SnapKit
+import ShapeView
 
 public class ShadowTitleRadarChart: UIView {
     
@@ -52,6 +53,24 @@ public class ShadowTitleRadarChart: UIView {
     public var maxLevel: Int? {
         didSet {
             radarChart.maxLevel = maxLevel
+        }
+    }
+    
+    public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+        didSet {
+            radarChart.innerShadow = innerShadow
+        }
+    }
+    
+    public var outerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+        didSet {
+            radarChart.outerShadow = outerShadow
+        }
+    }
+    
+    public var radarColor: UIColor? {
+        didSet {
+            radarChart.radarColor = radarColor
         }
     }
     
