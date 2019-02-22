@@ -107,7 +107,7 @@ public class ShadowRadarChart: UIView {
                 layer.innerShadow = innerShadow
                 if level == maxLevel {
                     layer.outerShadow = outerShadow
-                    layer.backgroundColor = radarColor.cgColor
+                    layer.backgroundColor = radarColor?.cgColor
                 }
                 radarLayer.addSublayer(layer)
             }
@@ -141,7 +141,7 @@ public class ShadowRadarChart: UIView {
         }
     }
     
-    public var radarColor: UIColor = .clear {
+    public var radarColor: UIColor? {
         didSet {
             guard
                 let layers = radarLayer.sublayers, layers.count > 0,
@@ -149,7 +149,7 @@ public class ShadowRadarChart: UIView {
                 else {
                     return
             }
-            radarLayer.backgroundColor = radarColor.cgColor
+            radarLayer.backgroundColor = radarColor?.cgColor
         }
     }
 

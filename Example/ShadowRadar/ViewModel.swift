@@ -9,12 +9,15 @@
 import RxSwift
 import RxCocoa
 import ShadowRadar
+import ShapeView
 
 class ViewModel {
     
     let maxLevel = BehaviorRelay<Int>(value: 5)
     let radar = PublishSubject<Radar>()
     let titles = PublishSubject<[String]>()
+    let shadow = PublishSubject<ShapeShadow>()
+    let radarColor = PublishSubject<UIColor>()
     
     func updateLevelsButton() {
         maxLevel.accept(Int.random(in: 3 ... 8))
@@ -23,11 +26,16 @@ class ViewModel {
     
     func updateRadar() {
         let levels = self.maxLevel.value
-        radar.onNext(Radar(levels: (0 ... levels).map { _ in Int.random(in: 1 ... levels)}, color: .random))
+        radar.onNext(.init(levels: (0 ... levels).map { _ in Int.random(in: 1 ... levels)}, color: .random))
     }
     
     func updateTitles() {
         titles.onNext(["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled())
+    }
+    
+    func updateRadarBackground() {
+        shadow.onNext(.init(raduis: CGFloat.random(in: 5 ... 10), color: .random, opacity: Float.random(in: 0.5 ... 1)))
+        radarColor.onNext(.random)
     }
     
 }

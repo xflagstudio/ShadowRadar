@@ -72,6 +72,18 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private lazy var updateRadarButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update Radar Background", for: .normal)
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.rx.tap.bind { [unowned self] in
+            self.viewModel.updateRadarBackground()
+        }.disposed(by: disposeBag)
+        return button
+    }()
+    
     private lazy var updateTitlesButton: UIButton = {
         let button = UIButton()
         button.setTitle("Update Title", for: .normal)
@@ -105,6 +117,7 @@ class ViewController: UIViewController {
         view.addSubview(titleRadarChart)
         view.addSubview(updateLevelsButton)
         view.addSubview(updateChartButton)
+        view.addSubview(updateRadarButton)
         view.addSubview(updateTitlesButton)
         createConstraints()
         
@@ -113,6 +126,9 @@ class ViewController: UIViewController {
         viewModel.maxLevel.bind(to: titleRadarChart.rx.maxLevel).disposed(by: disposeBag)
         viewModel.radar.bind(to: titleRadarChart.rx.radar(at: 1)).disposed(by: disposeBag)
         viewModel.titles.bind(to: titleRadarChart.rx.titles).disposed(by: disposeBag)
+        viewModel.shadow.bind(to: radarChart.rx.innerShadow).disposed(by: disposeBag)
+        viewModel.shadow.bind(to: radarChart.rx.outerShadow).disposed(by: disposeBag)
+        viewModel.radarColor.bind(to: radarChart.rx.radarColor).disposed(by: disposeBag)
     }
 
     private func createConstraints() {
@@ -145,10 +161,16 @@ class ViewController: UIViewController {
             $0.top.equalTo(updateLevelsButton.snp.bottom).offset(20)
         }
         
-        updateTitlesButton.snp.makeConstraints {
+        updateRadarButton.snp.makeConstraints {
             $0.size.equalTo(updateLevelsButton)
             $0.centerX.equalTo(updateLevelsButton)
             $0.top.equalTo(updateChartButton.snp.bottom).offset(20)
+        }
+        
+        updateTitlesButton.snp.makeConstraints {
+            $0.size.equalTo(updateLevelsButton)
+            $0.centerX.equalTo(updateLevelsButton)
+            $0.top.equalTo(updateRadarButton.snp.bottom).offset(20)
         }
         
     }

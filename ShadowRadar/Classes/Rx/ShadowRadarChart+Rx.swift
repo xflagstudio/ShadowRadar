@@ -26,6 +26,7 @@
 
 import RxSwift
 import RxCocoa
+import ShapeView
 
 public extension Reactive where Base: ShadowRadarChart {
     
@@ -38,6 +39,24 @@ public extension Reactive where Base: ShadowRadarChart {
     public func radar(at index: Int) -> Binder<Radar> {
         return Binder(self.base) { (chart, radar) in
             chart.updateRadar(radar, at: index)
+        }
+    }
+    
+    public var innerShadow: Binder<ShapeShadow> {
+        return Binder(self.base) { (chart, innerShadow) in
+            chart.innerShadow = innerShadow
+        }
+    }
+    
+    public var outerShadow: Binder<ShapeShadow> {
+        return Binder(self.base) { (chart, outerShadow) in
+            chart.outerShadow = outerShadow
+        }
+    }
+    
+    public var radarColor: Binder<UIColor?> {
+        return Binder(self.base) { (chart, radarColor) in
+            chart.radarColor = radarColor
         }
     }
     
