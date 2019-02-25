@@ -118,6 +118,15 @@ public class ShadowRadarChart: UIView {
         }
     }
     
+    public var radarsCount: Int = 0 {
+        didSet {
+            radarLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            (0 ..< radarsCount).forEach { _ in
+                self.addRadar(.init(levels: (0 ..< 5).map { _ in 0 }, color: .clear))
+            }
+        }
+    }
+    
     public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
         didSet {
             radarLayer.sublayers?.forEach {

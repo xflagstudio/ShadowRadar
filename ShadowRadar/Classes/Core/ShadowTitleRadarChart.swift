@@ -56,6 +56,12 @@ public class ShadowTitleRadarChart: UIView {
         }
     }
     
+    public var radarsCount: Int = 0 {
+        didSet {
+            radarChart.radarsCount = radarsCount
+        }
+    }
+    
     public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
         didSet {
             radarChart.innerShadow = innerShadow
