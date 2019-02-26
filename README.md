@@ -63,6 +63,14 @@ viewModel.outerShadow.bind(to: chart.rx.outerShadow).disposed(by: disposeBag)
 viewModel.radarColor.bind(to: chart.rx.radarColor).disposed(by: disposeBag)
 ```
 
+To update the radar chart using `chart.rx.radar(at index: Int)`  without creating radar layers with `addRadar` method, you need to **set the `radarsCount` at first**.
+
+```Swift
+radar.radarsCount = 2
+```
+Setting `radarsCount` will remove all the old radar layers and creating new empty radar layers.
+`radarsCount` also supports the RxSwift extension.
+
 ## License
 
 ShadowRadar is available under the MIT license. See the LICENSE file for more info.
