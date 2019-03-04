@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         chart.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         chart.titleColor = .white
         chart.titleMargin = 10
-        chart.titleAlignment = .leftRight
+        chart.titleAlignment = .center
         return chart
     }()
     

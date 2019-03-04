@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ShadowRadar'
-  s.version          = '0.2.2'
+  s.version          = '0.2.3'
   s.summary          = 'A radar chart view with shadow.'
 
 # This description is used to generate tags and improve search results.
@@ -30,8 +30,6 @@ ShadowRadar is a radar chart view with shadow.
   s.ios.deployment_target = '9.0'
 
   s.dependency 'ShapeView', '~> 0.3'
-  s.dependency 'SnapKit', '~> 4.2'
-
   s.default_subspec = 'Core'
   
     s.subspec 'Core' do |core|

@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 
 import UIKit
-import SnapKit
 import ShapeView
 
 public class ShadowTitleRadarChart: UIView {
@@ -137,53 +136,46 @@ public class ShadowTitleRadarChart: UIView {
     
     private func createConstraints() {
         
-        radarChart.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabels[0].snp.bottom).offset(titleMargin)
-            $0.bottom.equalTo(titleLabels[3].snp.top).offset(-titleMargin)
-            $0.width.equalTo(radarChart.snp.height)
-        }
-        
-        titleLabels[0].snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview()
-        }
-        
-        titleLabels[3].snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
+        radarChart.translatesAutoresizingMaskIntoConstraints = false
+        radarChart.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        radarChart.topAnchor.constraint(equalTo: titleLabels[0].bottomAnchor, constant: titleMargin).isActive = true
+        radarChart.bottomAnchor.constraint(equalTo: titleLabels[3].topAnchor, constant: -titleMargin).isActive = true
+        radarChart.widthAnchor.constraint(equalTo: radarChart.heightAnchor).isActive = true
 
+        titleLabels[0].translatesAutoresizingMaskIntoConstraints = false
+        titleLabels[0].centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        titleLabels[0].topAnchor.constraint(equalTo: topAnchor).isActive = true
+        
+        titleLabels[3].translatesAutoresizingMaskIntoConstraints = false
+        titleLabels[3].centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        titleLabels[3].bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        
         switch titleAlignment {
             
         case .center:
             let radarHeight = (bounds.height - 2.0 * titleLabels[0].font.lineHeight)
             let verticalOffset = radarHeight / 4.0
             let horizontalOffset = radarHeight * (1 - sin(.pi / 3.0)) / 2.0
+
+            titleLabels[1].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[1].rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            titleLabels[1].leftAnchor.constraint(equalTo: radarChart.rightAnchor, constant: -horizontalOffset).isActive = true
+            titleLabels[1].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: -verticalOffset).isActive = true
             
-            titleLabels[1].snp.makeConstraints {
-                $0.right.equalToSuperview()
-                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
-            }
+            titleLabels[2].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[2].rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            titleLabels[2].leftAnchor.constraint(equalTo: radarChart.rightAnchor, constant: -horizontalOffset).isActive = true
+            titleLabels[2].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: verticalOffset).isActive = true
             
-            titleLabels[2].snp.makeConstraints {
-                $0.right.equalToSuperview()
-                $0.left.equalTo(radarChart.snp.right).offset(-horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(verticalOffset)
-            }
+            titleLabels[4].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[4].rightAnchor.constraint(equalTo: radarChart.leftAnchor, constant: horizontalOffset).isActive = true
+            titleLabels[4].leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            titleLabels[4].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: verticalOffset).isActive = true
             
-            titleLabels[4].snp.makeConstraints {
-                $0.left.equalToSuperview()
-                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(verticalOffset)
-            }
-            
-            titleLabels[5].snp.makeConstraints {
-                $0.left.equalToSuperview()
-                $0.right.equalTo(radarChart.snp.left).offset(horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
-            }
+            titleLabels[5].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[5].rightAnchor.constraint(equalTo: radarChart.leftAnchor, constant: horizontalOffset).isActive = true
+            titleLabels[5].leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            titleLabels[5].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: -verticalOffset).isActive = true
         case .leftRight:
             
             titleLabels.enumerated().forEach {
@@ -202,29 +194,25 @@ public class ShadowTitleRadarChart: UIView {
             let verticalOffset = radius * sin(.pi / 6.0)
             let horizontalOffset = radius * cos(.pi / 6.0)
             
-            titleLabels[1].snp.makeConstraints {
-                $0.right.equalToSuperview()
-                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
-            }
-            
-            titleLabels[2].snp.makeConstraints {
-                $0.right.equalToSuperview()
-                $0.left.equalTo(radarChart.snp.centerX).offset(horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(verticalOffset)
-            }
-            
-            titleLabels[4].snp.makeConstraints {
-                $0.left.equalToSuperview()
-                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(verticalOffset)
-            }
-            
-            titleLabels[5].snp.makeConstraints {
-                $0.left.equalToSuperview()
-                $0.right.equalTo(radarChart.snp.centerX).offset(-horizontalOffset)
-                $0.centerY.equalTo(radarChart).offset(-verticalOffset)
-            }
+            titleLabels[1].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[1].rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            titleLabels[1].leftAnchor.constraint(equalTo: radarChart.centerXAnchor, constant: horizontalOffset).isActive = true
+            titleLabels[1].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: -verticalOffset).isActive = true
+
+            titleLabels[2].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[2].rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            titleLabels[2].leftAnchor.constraint(equalTo: radarChart.centerXAnchor, constant: horizontalOffset).isActive = true
+            titleLabels[2].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: verticalOffset).isActive = true
+
+            titleLabels[4].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[4].rightAnchor.constraint(equalTo: radarChart.centerXAnchor, constant: -horizontalOffset).isActive = true
+            titleLabels[4].leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            titleLabels[4].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: verticalOffset).isActive = true
+
+            titleLabels[5].translatesAutoresizingMaskIntoConstraints = false
+            titleLabels[5].rightAnchor.constraint(equalTo: radarChart.centerXAnchor, constant: -horizontalOffset).isActive = true
+            titleLabels[5].leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            titleLabels[5].centerYAnchor.constraint(equalTo: radarChart.centerYAnchor, constant: -verticalOffset).isActive = true
         }
         
     }
