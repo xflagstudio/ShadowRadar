@@ -30,16 +30,16 @@ class ViewController: UIViewController {
     private lazy var radarChart: ShadowRadarChart = {
         let chart = ShadowRadarChart()
         chart.maxLevel = 4
-        chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
-        chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
+        chart.addRadar(.init(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        chart.addRadar(.init(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
         return chart
     }()
     
     private lazy var titleRadarChart: ShadowTitleRadarChart = {
         let chart = ShadowTitleRadarChart()
         chart.maxLevel = 4
-        chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
-        chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
+        chart.addRadar(.init(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
+        chart.addRadar(.init(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
         chart.titles = ["Alice", "Bob", "Carol", "Dave", "Eve", "Frank"].shuffled()
         chart.titleFont = UIFont.systemFont(ofSize: 20, weight: .bold)
         chart.titleColor = .white

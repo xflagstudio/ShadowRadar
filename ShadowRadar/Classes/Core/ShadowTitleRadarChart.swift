@@ -25,10 +25,9 @@
 // THE SOFTWARE.
 
 import UIKit
-import ShapeView
 
 public class ShadowTitleRadarChart: UIView {
-    
+
     public enum TitleAlignment {
         case center
         case leftRight
@@ -55,13 +54,13 @@ public class ShadowTitleRadarChart: UIView {
         }
     }
     
-    public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+    public var innerShadow: ShadowRadarChart.Shadow = .init(raduis: 10, color: .lightGray) {
         didSet {
             radarChart.innerShadow = innerShadow
         }
     }
     
-    public var outerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
+    public var outerShadow: ShadowRadarChart.Shadow = .init(raduis: 10, color: .lightGray) {
         didSet {
             radarChart.outerShadow = outerShadow
         }

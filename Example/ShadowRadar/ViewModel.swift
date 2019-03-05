@@ -9,14 +9,13 @@
 import RxSwift
 import RxCocoa
 import ShadowRadar
-import ShapeView
 
 class ViewModel {
     
     let maxLevel = BehaviorRelay<Int>(value: 5)
-    let radar = PublishSubject<Radar>()
+    let radar = PublishSubject<ShadowRadarChart.Radar>()
     let titles = PublishSubject<[String]>()
-    let shadow = PublishSubject<ShapeShadow>()
+    let shadow = PublishSubject<ShadowRadarChart.Shadow>()
     let radarColor = PublishSubject<UIColor>()
     
     func updateLevelsButton() {

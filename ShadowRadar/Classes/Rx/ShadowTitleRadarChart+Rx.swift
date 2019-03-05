@@ -26,7 +26,6 @@
 
 import RxSwift
 import RxCocoa
-import ShapeView
 
 public extension Reactive where Base: ShadowTitleRadarChart {
     
@@ -36,19 +35,13 @@ public extension Reactive where Base: ShadowTitleRadarChart {
         }
     }
     
-    public var radarsCount: Binder<Int> {
-        return Binder(self.base) { (chart, count) in
-            chart.radarsCount = count
-        }
-    }
-    
-    public var innerShadow: Binder<ShapeShadow> {
+    public var innerShadow: Binder<ShadowRadarChart.Shadow> {
         return Binder(self.base) { (chart, innerShadow) in
             chart.innerShadow = innerShadow
         }
     }
     
-    public var outerShadow: Binder<ShapeShadow> {
+    public var outerShadow: Binder<ShadowRadarChart.Shadow> {
         return Binder(self.base) { (chart, outerShadow) in
             chart.outerShadow = outerShadow
         }
