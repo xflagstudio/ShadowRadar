@@ -36,12 +36,6 @@ public extension Reactive where Base: ShadowRadarChart {
         }
     }
     
-    public var radarsCount: Binder<Int> {
-        return Binder(self.base) { (chart, count) in
-            chart.radarsCount = count
-        }
-    }
-    
     public var innerShadow: Binder<ShapeShadow> {
         return Binder(self.base) { (chart, innerShadow) in
             chart.innerShadow = innerShadow
@@ -60,7 +54,7 @@ public extension Reactive where Base: ShadowRadarChart {
         }
     }
     
-    public func radar(at index: Int) -> Binder<Radar> {
+    public func radar(at index: Int) -> Binder<ShadowRadarChart.Radar> {
         return Binder(self.base) { (chart, radar) in
             chart.updateRadar(radar, at: index)
         }

@@ -72,17 +72,19 @@ extension UIBezierPath {
     
 }
 
-public struct Radar {
-    var levels: [Int]
-    var color: UIColor
-    
-    public init(levels: [Int], color: UIColor) {
-        self.levels = levels
-        self.color = color
-    }
-}
-
 public class ShadowRadarChart: UIView {
+    
+    public struct Radar {
+        var levels: [Int]
+        var color: UIColor
+        
+        public init(levels: [Int], color: UIColor) {
+            self.levels = levels
+            self.color = color
+        }
+        
+        public static var empty = Radar(levels: (0 ... 5).map { _ in 0 }, color: .clear)
+    }
     
     private var chartLayers: [CAShapeLayer] = []
     
@@ -114,15 +116,6 @@ public class ShadowRadarChart: UIView {
             
             if bounds != .zero {
                 radarLayer.sublayers?.forEach { $0.frame = bounds }
-            }
-        }
-    }
-    
-    public var radarsCount: Int = 0 {
-        didSet {
-            radarLayer.sublayers?.forEach { $0.removeFromSuperlayer() }
-            (0 ..< radarsCount).forEach { _ in
-                self.addRadar(.init(levels: (0 ..< 5).map { _ in 0 }, color: .clear))
             }
         }
     }
@@ -220,6 +213,10 @@ public class ShadowRadarChart: UIView {
         let layer = ShapeLayer()
         setRadar(radar, for: layer)
         levelLayer.addSublayer(layer)
+    }
+    
+    public func addRadars(_ radars: [Radar]) {
+        radars.forEach { self.addRadar($0) }
     }
     
     public func removeRadar(at index: Int) {

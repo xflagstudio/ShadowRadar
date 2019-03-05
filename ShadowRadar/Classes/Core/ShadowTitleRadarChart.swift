@@ -55,12 +55,6 @@ public class ShadowTitleRadarChart: UIView {
         }
     }
     
-    public var radarsCount: Int = 0 {
-        didSet {
-            radarChart.radarsCount = radarsCount
-        }
-    }
-    
     public var innerShadow: ShapeShadow = .init(raduis: 10, color: .lightGray) {
         didSet {
             radarChart.innerShadow = innerShadow
@@ -217,7 +211,7 @@ public class ShadowTitleRadarChart: UIView {
         
     }
     
-    public func addRadar(_ radar: Radar) {
+    public func addRadar(_ radar: ShadowRadarChart.Radar) {
         radarChart.addRadar(radar)
     }
     
@@ -225,7 +219,7 @@ public class ShadowTitleRadarChart: UIView {
         radarChart.removeRadar(at: index)
     }
     
-    public func updateRadar(_ radar: Radar, at index: Int) {
+    public func updateRadar(_ radar: ShadowRadarChart.Radar, at index: Int) {
         radarChart.updateRadar(radar, at: index)
     }
     

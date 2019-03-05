@@ -60,7 +60,7 @@ public extension Reactive where Base: ShadowTitleRadarChart {
         }
     }
     
-    public func radar(at index: Int) -> Binder<Radar> {
+    public func radar(at index: Int) -> Binder<ShadowRadarChart.Radar> {
         return Binder(self.base) { (chart, radar) in
             chart.updateRadar(radar, at: index)
         }
