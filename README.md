@@ -38,8 +38,8 @@ import ShadowRadar
 
 let chart = ShadowTitleRadarChart()
 chart.maxLevel = 4
-chart.innerShadow = ShapeShadow(raduis: 5, color: .white, opacity: 0.5)
-chart.outerShadow = ShapeShadow(raduis: 5, color: .white, opacity: 0.5)
+chart.innerShadow = .init(raduis: 5, color: .white, opacity: 0.5)
+chart.outerShadow = .init(raduis: 5, color: .white, opacity: 0.5)
 chart.radarColor = .clear
 chart.addRadar(Radar(levels: [3, 2, 3, 4, 3, 1], color: UIColor(white: 1, alpha: 0.75)))
 chart.addRadar(Radar(levels: [3, 4, 3, 3, 3, 2], color: UIColor(white: 0.5, alpha: 0.75)))
@@ -63,10 +63,10 @@ viewModel.outerShadow.bind(to: chart.rx.outerShadow).disposed(by: disposeBag)
 viewModel.radarColor.bind(to: chart.rx.radarColor).disposed(by: disposeBag)
 ```
 
-To update the radar chart using `chart.rx.radar(at index: Int)`  without creating radar layers with `addRadar` method, you need to **set the `radarsCount` at first**.
+To update the radar chart using `chart.rx.radar(at index: Int)`  without creating radar layers with `addRadar` method, you need to **set the empty radars at first**.
 
 ```Swift
-radar.radarsCount = 2
+radar.addRadars([.empty, .empty])
 ```
 Setting `radarsCount` will remove all the old radar layers and creating new empty radar layers.
 `radarsCount` also supports the RxSwift extension.

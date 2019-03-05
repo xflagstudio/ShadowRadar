@@ -214,6 +214,10 @@ public class ShadowTitleRadarChart: UIView {
         radarChart.addRadar(radar)
     }
     
+    public func addRadars(_ radars: [ShadowRadarChart.Radar]) {
+        radarChart.addRadars(radars)
+    }
+    
     public func removeRadar(at index: Int) {
         radarChart.removeRadar(at: index)
     }
