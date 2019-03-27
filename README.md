@@ -63,13 +63,11 @@ viewModel.outerShadow.bind(to: chart.rx.outerShadow).disposed(by: disposeBag)
 viewModel.radarColor.bind(to: chart.rx.radarColor).disposed(by: disposeBag)
 ```
 
-To update the radar chart using `chart.rx.radar(at index: Int)`  without creating radar layers with `addRadar` method, you need to **set the empty radars at first**.
+To update the radar chart using `chart.rx.radar(at index: Int)`  without creating radar layers with `addRadar` method, you can **set the empty radars at first**.
 
 ```Swift
 radar.addRadars([.empty, .empty])
 ```
-Setting `radarsCount` will remove all the old radar layers and creating new empty radar layers.
-`radarsCount` also supports the RxSwift extension.
 
 ## License
 
