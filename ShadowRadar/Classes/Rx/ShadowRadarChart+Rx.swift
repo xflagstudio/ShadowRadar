@@ -29,31 +29,31 @@ import RxCocoa
 
 public extension Reactive where Base: ShadowRadarChart {
     
-    public var maxLevel: Binder<Int> {
+    var maxLevel: Binder<Int> {
         return Binder(self.base) { (chart, maxLevel) in
             chart.maxLevel = maxLevel
         }
     }
     
-    public var innerShadow: Binder<ShadowRadarChart.Shadow> {
+    var innerShadow: Binder<ShadowRadarChart.Shadow> {
         return Binder(self.base) { (chart, innerShadow) in
             chart.innerShadow = innerShadow
         }
     }
     
-    public var outerShadow: Binder<ShadowRadarChart.Shadow> {
+    var outerShadow: Binder<ShadowRadarChart.Shadow> {
         return Binder(self.base) { (chart, outerShadow) in
             chart.outerShadow = outerShadow
         }
     }
     
-    public var radarColor: Binder<UIColor?> {
+    var radarColor: Binder<UIColor?> {
         return Binder(self.base) { (chart, radarColor) in
             chart.radarColor = radarColor
         }
     }
     
-    public func radar(at index: Int) -> Binder<ShadowRadarChart.Radar> {
+    func radar(at index: Int) -> Binder<ShadowRadarChart.Radar> {
         return Binder(self.base) { (chart, radar) in
             chart.updateRadar(radar, at: index)
         }
