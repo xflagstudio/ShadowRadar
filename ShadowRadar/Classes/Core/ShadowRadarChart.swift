@@ -122,7 +122,7 @@ public class ShadowRadarChart: UIView {
         }
     }
     
-    public var innerShadow: Shadow = .init(raduis: 10, color: .lightGray) {
+    public var innerShadow: Shadow = .init(radius: 10, color: .lightGray) {
         didSet {
             radarLayer.sublayers?.forEach {
                 guard let layer = $0 as? ShapeLayer else {
@@ -133,7 +133,7 @@ public class ShadowRadarChart: UIView {
         }
     }
     
-    public var outerShadow: Shadow = .init(raduis: 10, color: .lightGray) {
+    public var outerShadow: Shadow = .init(radius: 10, color: .lightGray) {
         didSet {
             guard
                 let layers = radarLayer.sublayers, layers.count > 0,

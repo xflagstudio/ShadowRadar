@@ -45,6 +45,7 @@ class ViewController: UIViewController {
         chart.titleColor = .white
         chart.titleMargin = 10
         chart.titleAlignment = .center
+        chart.titleShadow = .init(radius: 4, color: .white)
         return chart
     }()
     

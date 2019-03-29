@@ -33,7 +33,7 @@ class ViewModel {
     }
     
     func updateRadarBackground() {
-        shadow.onNext(.init(raduis: CGFloat.random(in: 5 ... 10), color: .random, opacity: Float.random(in: 0.5 ... 1)))
+        shadow.onNext(.init(radius: CGFloat.random(in: 5 ... 10), color: .random, opacity: Float.random(in: 0.5 ... 1)))
         radarColor.onNext(.random)
     }
     

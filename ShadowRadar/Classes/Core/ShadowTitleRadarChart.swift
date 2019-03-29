@@ -25,12 +25,29 @@
 // THE SOFTWARE.
 
 import UIKit
+import ShapeView
 
 public class ShadowTitleRadarChart: UIView {
 
     public enum TitleAlignment {
         case center
         case leftRight
+    }
+    
+    public struct TitleShadow {
+        
+        var radius: CGFloat
+        var color: UIColor
+        var opacity: Float
+        var offset: CGSize
+        
+        public init(radius: CGFloat = 0, color: UIColor = .clear, opacity: Float = 1, offset: CGSize = .zero) {
+            self.radius = radius
+            self.color = color
+            self.opacity = opacity
+            self.offset = offset
+        }
+        
     }
 
     private lazy var radarChart = ShadowRadarChart()
@@ -54,13 +71,13 @@ public class ShadowTitleRadarChart: UIView {
         }
     }
     
-    public var innerShadow: ShadowRadarChart.Shadow = .init(raduis: 10, color: .lightGray) {
+    public var innerShadow: ShadowRadarChart.Shadow = .init(radius: 10, color: .lightGray) {
         didSet {
             radarChart.innerShadow = innerShadow
         }
     }
     
-    public var outerShadow: ShadowRadarChart.Shadow = .init(raduis: 10, color: .lightGray) {
+    public var outerShadow: ShadowRadarChart.Shadow = .init(radius: 10, color: .lightGray) {
         didSet {
             radarChart.outerShadow = outerShadow
         }
@@ -98,6 +115,21 @@ public class ShadowTitleRadarChart: UIView {
                 return
             }
             titleLabels.forEach { $0.textColor = color }
+        }
+    }
+    
+    public var titleShadow: TitleShadow? {
+        didSet {
+            guard let shadow = titleShadow else {
+                return
+            }
+            titleLabels.forEach {
+                $0.layer.shadowColor = shadow.color.cgColor
+                $0.layer.shadowRadius = shadow.radius
+                $0.layer.shadowOpacity = shadow.opacity
+                $0.layer.shadowOffset = shadow.offset
+                $0.layer.masksToBounds = false
+            }
         }
     }
     
