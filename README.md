@@ -1,13 +1,13 @@
 # ShadowRadar
 
-[![CI Status](https://img.shields.io/travis/lm2343635/ShadowRadar.svg?style=flat)](https://travis-ci.org/lm2343635/ShadowRadar)
+[![Build Status](https://app.bitrise.io/app/3fe5e677ad8ee129/status.svg?token=AXXXJ8P4usXLS3Yh_4pepA)](https://app.bitrise.io/app/3fe5e677ad8ee129)
 [![Version](https://img.shields.io/cocoapods/v/ShadowRadar.svg?style=flat)](https://cocoapods.org/pods/ShadowRadar)
 [![License](https://img.shields.io/cocoapods/l/ShadowRadar.svg?style=flat)](https://cocoapods.org/pods/ShadowRadar)
 [![Platform](https://img.shields.io/cocoapods/p/ShadowRadar.svg?style=flat)](https://cocoapods.org/pods/ShadowRadar)
 
 ShadowRadar is a radar chart view with shadow.
 
-![Demo](https://raw.githubusercontent.com/xflagstudio/ShadowRadar/master/screenshoots/demo.png)
+![Demo](https://raw.githubusercontent.com/xflagstudio/ShadowRadar/master/screenshots/demo.png)
 
 In this demo, we use `ShadowRadar` to create a radar chart without titles and another one with titles.
 
