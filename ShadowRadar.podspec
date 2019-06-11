@@ -32,15 +32,15 @@ ShadowRadar is a radar chart view with shadow.
   s.dependency 'ShapeView', '~> 0.3'
   s.default_subspec = 'Core'
   
-    s.subspec 'Core' do |core|
-      core.source_files = 'ShadowRadar/Classes/Core/**/*'
-    end
-    
-    s.subspec 'Rx' do |rx|
-      rx.dependency 'ShadowRadar/Core', '~> 0'
-      rx.dependency 'RxCocoa', '~> 5'
-      rx.dependency 'RxSwift', '~> 5'
-      rx.source_files = 'ShadowRadar/Classes/Rx/**/*'
-    end
+  s.subspec 'Core' do |core|
+    core.source_files = 'ShadowRadar/Classes/Core/**/*'
+  end
+  
+  s.subspec 'Rx' do |rx|
+    rx.dependency 'ShadowRadar/Core', '~> 0'
+    rx.dependency 'RxCocoa', '~> 5'
+    rx.dependency 'RxSwift', '~> 5'
+    rx.source_files = 'ShadowRadar/Classes/Rx/**/*'
+  end
   
 end
